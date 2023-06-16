@@ -1,9 +1,15 @@
 // components/TodoList.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTodo, deleteTodo, removeAllTodos } from '../store/actions/todoActions';
 
 const TodoList = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    setShouldRender(true);
+  }, []);
+
   const todos = useSelector(state => state.todos);
   const dispatch = useDispatch();
 
@@ -36,11 +42,12 @@ const TodoList = () => {
     dispatch(removeAllTodos());
   };
 
-  return (
+  return shouldRender ? (
     <div className='mt-5 flex flex-col'>
-      <div className='flex flex-col'>
+      <ul className='flex flex-col'>
         {todos.map(todo => (
-          <div key={todo.id}
+          <li key={todo.id}
+        
           >
             {todo.id === updatedTodoId ? (
               <form onSubmit={handleUpdateSubmit}  className='mt-4 flex gap-2'>
@@ -69,14 +76,14 @@ const TodoList = () => {
                 </div>
               </div>
             )}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
       {todos.length > 0 && <button
                                 className='mt-4 w-auto rounded-xl py-4 px-4 bg-blue-500 text-white hover:bg-white hover:text-blue-700 hover:border-blue-700 hover:border-2 text-lg hover:text-xl hover:transition-all'
                                onClick={handleRemoveAll}>Remove All</button>}
     </div>
-  );
+  ): null;
 };
 
 export default TodoList;

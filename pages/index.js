@@ -1,7 +1,7 @@
 // pages/index.js
 
-import TodoForm from './components/TodoForm';
-import TodoList from './components/TodoList';
+import TodoForm from '../components/TodoForm';
+import TodoList from '../components/TodoList';
 
 
 

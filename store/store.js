@@ -1,10 +1,15 @@
 // store/store.js
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-import rootReducer from '../store/reducers/todoReducer';
-import { ADD_TODO, UPDATE_TODO, DELETE_TODO, REMOVE_ALL_TODOS } from './actions/types';
+import rootReducer from "../store/reducers/todoReducer";
+import {
+  ADD_TODO,
+  UPDATE_TODO,
+  DELETE_TODO,
+  REMOVE_ALL_TODOS,
+} from "./actions/types";
 
 const middlewares = [thunkMiddleware];
 
@@ -20,7 +25,7 @@ export const initializeStore = () => {
   store.subscribe(() => {
     const { todos } = store.getState();
     saveState({
-      todos
+      todos,
     });
   });
 
@@ -39,7 +44,7 @@ const loadState = () => {
   }
 };
 
-const saveState = state => {
+const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(process.env.LOCAL_STORAGE_KEY, serializedState);
