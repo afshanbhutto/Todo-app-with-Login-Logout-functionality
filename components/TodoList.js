@@ -4,12 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateTodo, deleteTodo, removeAllTodos } from '../store/actions/todoActions';
 
 const TodoList = () => {
+
+
+  //to resolve hydration problem
   const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
     setShouldRender(true);
   }, []);
-
+//
   const todos = useSelector(state => state.todos);
   const dispatch = useDispatch();
 
@@ -41,8 +44,9 @@ const TodoList = () => {
   const handleRemoveAll = () => {
     dispatch(removeAllTodos());
   };
-
+//to resolve hydration problem
   return shouldRender ? (
+    //
     <div className='mt-5 flex flex-col'>
       <ul className='flex flex-col'>
         {todos.map(todo => (
@@ -83,7 +87,8 @@ const TodoList = () => {
                                 className='mt-4 w-auto rounded-xl py-4 px-4 bg-blue-500 text-white hover:bg-white hover:text-blue-700 hover:border-blue-700 hover:border-2 text-lg hover:text-xl hover:transition-all'
                                onClick={handleRemoveAll}>Remove All</button>}
     </div>
-  ): null;
+  ): null; 
+  //
 };
 
 export default TodoList;
