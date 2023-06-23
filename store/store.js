@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import rootReducer from "../store/reducers/todoReducer";
+import rootReducer from '../store/reducers/todoReducer';
 import {
   ADD_TODO,
   UPDATE_TODO,

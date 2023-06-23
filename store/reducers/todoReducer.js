@@ -4,6 +4,7 @@ import {
   UPDATE_TODO,
   DELETE_TODO,
   REMOVE_ALL_TODOS,
+  UPDATE_TODO_ORDER,
 } from "../actions/types";
 
 const initialState = {
@@ -41,6 +42,11 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         todos: [],
+      };
+    case UPDATE_TODO_ORDER:
+      return {
+        ...state,
+        todos: action.payload,
       };
     default:
       return state;
