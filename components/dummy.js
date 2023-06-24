@@ -12,7 +12,7 @@ import {
 // for drag-and-drop functionality
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-// for generating QR codes
+//  for generating QR codes.
 import { toDataURL } from "qrcode";
 
 const TodoList = () => {
@@ -42,16 +42,15 @@ const TodoList = () => {
   const handleUpdateInputChange = (e) => {
     setUpdatedTodoText(e.target.value);
   };
+
   // It dispatches the updateTodo action with the updatedTodoId and updated text as arguments, and then resets the updatedTodoId and updatedTodoText state variables.
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
     if (updatedTodoText.trim() !== "") {
       dispatch(updateTodo(updatedTodoId, { text: updatedTodoText }));
+
       setUpdatedTodoId("");
       setUpdatedTodoText("");
-      //I have changed Tthis line
-      // Generate a new QR code for the updated todo
-      generateQRCode(updatedTodoText, updatedTodoId);
     }
   };
 
@@ -62,11 +61,12 @@ const TodoList = () => {
   const handleRemoveAll = () => {
     dispatch(removeAllTodos());
   };
-  // called when a drag-and-drop operation is completed
 
+  // called when a drag-and-drop operation is completed
   const handleDragEnd = (result) => {
     if (!result.destination) return;
 
+    // updates the order of todos in the todosCopy array based on the source and destination indices provided by result. It then dispatches the updateTodoOrder action with the updated todosCopy array
     const { source, destination } = result;
     const todosCopy = [...todos];
     const [removed] = todosCopy.splice(source.index, 1);
@@ -74,8 +74,8 @@ const TodoList = () => {
 
     dispatch(updateTodoOrder(todosCopy));
   };
-  // generates a QR code based on the provided text and id. It uses the toDataURL function to convert the text into a data URL representing the QR code image
 
+  // generates a QR code based on the provided text and id. It uses the toDataURL function to convert the text into a data URL representing the QR code image
   const generateQRCode = async (text, id) => {
     try {
       const dataUrl = await toDataURL(text);
@@ -84,8 +84,8 @@ const TodoList = () => {
       console.error(error);
     }
   };
-  // creates a temporary a element, sets the href attribute to the provided dataUrl, sets the download attribute to "qrcode.png" (the desired file name), and triggers a click event on the element. This initiates the download of the QR code image.
 
+  // creates a temporary a element, sets the href attribute to the provided dataUrl, sets the download attribute to "qrcode.png" (the desired file name), and triggers a click event on the element. This initiates the download of the QR code image.
   const downloadQRCode = (id) => {
     const dataUrl = qrs[id];
     if (dataUrl) {
@@ -99,7 +99,6 @@ const TodoList = () => {
   return shouldRender ? (
     <DragDropContext onDragEnd={handleDragEnd}>
       {/* represents the droppable area where the draggable todos can be dropped. */}
-
       <Droppable droppableId="todoList">
         {(provided) => (
           <div
@@ -114,7 +113,6 @@ const TodoList = () => {
                 .reverse()
                 .map((todo, index) => (
                   // The index prop is used to maintain the order of the todos during dragging and dropping
-
                   <Draggable
                     key={todo.id.toString()}
                     draggableId={todo.id.toString()}
@@ -128,7 +126,6 @@ const TodoList = () => {
                         {...provided.dragHandleProps}
                       >
                         {/* If the todo is being updated, a form with an input field is rendered */}
-
                         {todo.id === updatedTodoId ? (
                           <form
                             onSubmit={handleUpdateSubmit}
@@ -159,9 +156,8 @@ const TodoList = () => {
                           </form>
                         ) : (
                           //  If the todo is not being updated
-
                           <>
-                            <div className="flex items-center">
+                            <div className="flex items-center ">
                               <span
                                 className="py-2 px-2 text-sm flex-grow cursor-pointer break-words"
                                 onClick={() => handleUpdate(todo.id, todo.text)}
@@ -219,7 +215,7 @@ const TodoList = () => {
             {todos.length > 0 && (
               <div className="mt-4 flex justify-center lg:justify-center">
                 <button
-                  className="w-auto lg:w-40 rounded-xl py-4 px-4 bg-red-700 text-white text-sm"
+                  className="w-auto lg:w-40 rounded-xl py-4 px-4 bg-yellow-400 text-black uppercase font-semibold tracking-[2px] hover:bg-red-700 hover:text-white hover:border-yellow-400 hover:border-1 text-lg  hover:transition-all"
                   onClick={handleRemoveAll}
                 >
                   Remove All
